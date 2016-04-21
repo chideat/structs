@@ -9,7 +9,7 @@ functions or improve the existing code.
 ## Install
 
 ```bash
-go get github.com/fatih/structs
+go get github.com/chideat/structs
 ```
 
 ## Usage and Examples
