@@ -98,17 +98,6 @@ func (s *Struct) FillMap(out map[string]interface{}) {
 			name = tagName
 		}
 
-		// if the value is a zero value and the field is marked as omitempty do
-		// not include
-		if tagOpts.Has("omitempty") {
-			zero := reflect.Zero(val.Type()).Interface()
-			current := val.Interface()
-
-			if reflect.DeepEqual(current, zero) {
-				continue
-			}
-		}
-
 		if IsStruct(val.Interface()) && !tagOpts.Has("omitnested") {
 			// look out for embedded structs, and convert them to a
 			// map[string]interface{} too
@@ -167,17 +156,6 @@ func (s *Struct) Values() []interface{} {
 		val := s.value.FieldByName(field.Name)
 
 		_, tagOpts := parseTag(field.Tag.Get(s.TagName))
-
-		// if the value is a zero value and the field is marked as omitempty do
-		// not include
-		if tagOpts.Has("omitempty") {
-			zero := reflect.Zero(val.Type()).Interface()
-			current := val.Interface()
-
-			if reflect.DeepEqual(current, zero) {
-				continue
-			}
-		}
 
 		if tagOpts.Has("string") {
 			s, ok := val.Interface().(fmt.Stringer)
